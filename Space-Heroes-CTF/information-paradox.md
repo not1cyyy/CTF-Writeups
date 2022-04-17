@@ -1,5 +1,60 @@
 # Description 
 We were supplied with a corrupt RSA private key and we're asked to recover the full key in order to get the flag ! 
+```
+┌─[not1cyyy@0x45] - [~/Desktop/space-heroes-CTF/information-paradox_FINISHED] - [dim. avril 17, 01:28]
+└─[$] <> cat singularity.pem 
+-----BEGIN RSA PRIVATE KEY-----
+MIIJKgIBAAKCAgEAyiLaBE3WT/Tmu3oKID++lbIhEENZD2+RfHutw5S6odTw10LY
+uHJLGAs2hjFlg31InNrzWjA8mK11aKTsWtG6OdOU+Nin7vUs918eca2aIzoTjnL8
+T5ohkzHvzYOn1BRZ6IIeTfgmAN6l3HsiMxH4ADVPpXxoCtJJA18qhCBGv+KcDos7
+SqL/EGg7USmzxSEGDFE8vFuJYZZEZygC3y4XhDerwtUrWDJbEOKp2VyeXaP2y/jk
+Am3rG5gpEd4HWIhsCrNl7Zkj9UCj/BX/DgbhEYkSTPKDlZ6ZXIPokD71Fsuol/Yb
+QsLTBTqoo7fqS9PbWBDOMEMgfRjsOYVs2r37A1hsHw8dsz6K1vogs+zOw/Li+jhZ
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+GDYGPNllyOAIOZUCggEBANNvIJO9Roh+p3+E05/Lt4KtR7GxO8oIrslq/j3dZhdp
+MbW1EomJv45grjC5hdk7e4k2vZKWnQsA0S1hKHwoklNIsbFEfzVBtLazVEnPF1/C
+DFuCoP1HpZ9gKnPhr0YkaInPyVDax8b41GdHl/D9gUh0xXr8k2UlV10Kt5cN9IrV
+Irb1CmW0IZyJKEmQRjIpQ/0aCn7Ygw+8SeluVGihwO7BD4GvjqiOeI/uDosELldu
+jATEKZiWtUeBXcBPfIDWNQ0kAB4I1SFR4gkLH0B3bQgmGG/7ZkMeAOoeOh2Rn30s
+GCbF9KPcxsaX0PROhlc5wgVs7ppcSjp9s6MjPN4qdH0CggEAKGj7TG24BYnr6r9J
+nqDQPJ1sv4TckYiyHPeN752qw3grLAO0pQQYATe9W/d4yI+0jCZ8m3OXYAbJSkkO
+9bwHxsFFmpmhXPAo1EmJwSD6x5rIV2z+kUhROLe7qBvCbesDxj47Hb4p2jOP0yHP
+RS2BcA1gJ18O56ge1xOqVW/IYrHKaG1MN4/FjeailMu7FvAdcAF6nCQD5rIyNI1/
+A5KO+uRxQwtUA5eahx21XIQm/S31VlMGzM4aeW+huyeAAG8q0uB72hSus9GC0PUK
+8K/r06EeQ2fYeltYEhRzP7lrHyAUTO4xiopGPFlqXbD/3olItMDI0tfj+X+cKnUg
+7sTM5QKCAQEAv4GIIEjv+fG+BOJqS/JY5SPOLEQ7w2LZ7dXbMm22ar39KHg5shny
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+****************************************************************
+-----END RSA PRIVATE KEY-----
+```
 ## Files
 singularity.pem
 # Solution
@@ -8,8 +63,15 @@ singularity.pem
 - There are 2 intact blocks so we can assume initially that we can recover 2 RSA elements from it 
 ## Execution
 Looking at the file I tried to parse it using `openssl asn1parse -in singularity.pem` which gives me an error 
-
+```
+┌─[not1cyyy@0x45] - [~/Desktop/space-heroes-CTF/information-paradox_FINISHED] - [dim. avril 17, 01:28]
+└─[$] <> openssl asn1parse -in singularity.pem 
+Error: offset out of range
+```
 I went ahead and converted the base64 values into hex values to keep track of the magic bytes of RSA **02 82**, doing that and excluding the 2 bytes after it we obtain nothing useful from the first block but instead got 2 integers from the second block ! 
+
+![Screenshot from 2022-04-17 01-32-48](https://user-images.githubusercontent.com/101048320/163695373-380a0f43-3f20-42be-acf4-c2cdfe8e977a.png)
+
 
 Knowing the asn1 structure we can assume that it can be one of the primes among them, using the isPrime function from Crypto.Util.number library in Python we confirmed that one of them is prime
 
