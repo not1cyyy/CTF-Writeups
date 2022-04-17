@@ -20,11 +20,12 @@ There must be a tool that we don't know about so I tried googling "invisible ste
 
 This must be it ! I went ahead to downloading it and I opened it 
 
-![](https://miro.medium.com/max/1400/1*NPhYaIAw_3QeKTQ-pgQWQA.png)
-
 Then heading to the decode section I was asked to supply an image and a passphrase, I uploaded the given image with no passphrase
 
 Then here's where stuff get complicated a bit, the default algorithm prompts me with an error so I kept trying until one that's called **"Dynamicfilterfirst"** worked ! 
+
+![Screenshot from 2022-04-17 01-38-46](https://user-images.githubusercontent.com/101048320/163695517-4bbe3384-3baf-4e3c-878a-f60a59f80ad9.png)
+
 
 Awesome ! now the output file indicates using the file command that it's a jpeg image so I went ahead and renamed it to output.jpeg
 
