@@ -44,4 +44,4 @@ Using -iter or -pbkdf2 would be better.
 ```
 This command results in an output file called `output.txt`, we `cat` this file and voila ! 
 # Flag 
-picoCTF{nc_73115_411_77b05957}
+picoCTF{nc_73115_411_dd54ab67}
