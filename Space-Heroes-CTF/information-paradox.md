@@ -73,7 +73,7 @@ I went ahead and converted the base64 values into hex values to keep track of th
 ![Screenshot from 2022-04-17 01-32-48](https://user-images.githubusercontent.com/101048320/163695373-380a0f43-3f20-42be-acf4-c2cdfe8e977a.png)
 
 
-Knowing the asn1 structure we can assume that it can be one of the primes among them, using the `isPrime` function from `Crypto.Util.number` library in Python we confirmed that one of them is prime
+Knowing the asn1 structure we can assume that it can be one of the primes among them, using the isPrime function from Crypto.Util.number library in Python we confirmed that one of them is prime
 
 Great ! Since the other integer isn't prime and is directly after the prime number $q$ it's definetly $d_{p}$ ($d$ mod ($p-1$)) 
 
