@@ -68,21 +68,21 @@ Looking at the file I tried to parse it using `openssl asn1parse -in singularity
 └─[$] <> openssl asn1parse -in singularity.pem 
 Error: offset out of range
 ```
-I went ahead and converted the base64 values into hex values to keep track of the magic bytes of RSA **02 82**, doing that and excluding the 2 bytes after it we obtain nothing useful from the first block but instead got 2 integers from the second block ! 
+I went ahead and converted the base64 values into hex values to keep track of the magic bytes of RSA `02 82`, doing that and excluding the 2 bytes after it we obtain nothing useful from the first block but instead got 2 integers from the second block ! 
 
 ![Screenshot from 2022-04-17 01-32-48](https://user-images.githubusercontent.com/101048320/163695373-380a0f43-3f20-42be-acf4-c2cdfe8e977a.png)
 
 
 Knowing the asn1 structure we can assume that it can be one of the primes among them, using the isPrime function from Crypto.Util.number library in Python we confirmed that one of them is prime
 
-Great ! Since the other integer isn't prime and is directly after the prime number (q) it's definetly dp (d mod (p-1)) 
+Great ! Since the other integer isn't prime and is directly after the prime number $q$ it's definetly $d_{p}$ ($d$ mod ($p-1$)) 
 
-Now we need to write a simple python script that will get us p ! 
+Now we need to write a simple python script that will get us $p$ ! 
 
-We know that **e*dp = 1 mod (p-1)** so doing the math we have to bruteforce p knowing that **p = (e*dp-1)/k + 1** for **3<k<e** 
+We know that $e*d_{p} = 1$ mod ($p-1$) so doing the math we have to bruteforce $p$ knowing that $p = \frac{(e*d_{p}-1)}{k} + 1$ for $3 < k < e$ 
 
-Assuming that e = 65537 we write this python script : 
-```
+Assuming that $e = 65537$ we write this python script : 
+```python
 from Crypto.Util.number import isPrime
 q = 0x00d36f2093bd46887ea77f84d39fcbb782ad47b1b13bca08aec96afe3ddd66176931b5b5128989bf8e60ae30b985d93b7b8936bd92969d0b00d12d61287c28925348b1b1447f3541b4b6b35449cf175fc20c5b82a0fd47a59f602a73e1af46246889cfc950dac7c6f8d4674797f0fd814874c57afc936525575d0ab7970df48ad522b6f50a65b4219c8928499046322943fd1a0a7ed8830fbc49e96e5468a1c0eec10f81af8ea88e788fee0e8b042e576e8c04c4299896b547815dc04f7c80d6350d24001e08d52151e2090b1f40776d0826186ffb66431e00ea1e3a1d919f7d2c1826c5f4a3dcc6c697d0f44e865739c2056cee9a5c4a3a7db3a3233cde2a747d
 assert isPrime(q)
