@@ -15,7 +15,7 @@ Hint : We know the end sequence of the message will be $t3g0.
 - $t3g0 ? isn't that LSB encoding ? 
 ## Execution 
 I had this python script that was laying in one of my previous ctf challenges that can decode LSB so I ran it against the image : 
-```
+```python
 #import libraries
 import sys
 import numpy as np
